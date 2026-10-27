@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="stylesheet" href="src/style.css">
+  <title>MyText Editer13 — Markdown Editor with Undo/Redo (C++ Stacks)</title>
+</head>
+
+<body>
+
+  <div class="phoneFull" data-theme="dark" id="appCtn">
+    <div class="inktop">
+      <span class="fname" id="filenameEl">MyEditer 13</span>
+      <button class="tbtn" id="openBtn" title="Open a markdown file"><svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+        </svg>Open</button>
+      <button class="tbtn" id="saveBtn" title="Save markdown file"><svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+          <polyline points="17 21 17 13 7 13 7 21" />
+          <polyline points="7 3 7 8 15 8" />
+        </svg>Save</button>
+      <div class="exportWrap">
+        <button class="tbtn accent" id="exportBtn" title="Export as HTML, Word or PDF"><svg viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>Export</button>
+        <div class="exportMenu" id="exportMenuCtn" hidden>
+          <button id="expHtmlBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg><span>HTML file<small>Standalone web page</small></span></button>
+          <button id="expWordBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+            </svg><span>Word file<small>Opens in Word and Docs</small></span></button>
+          <button id="expPdfBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 6 2 18 2 18 9" />
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+              <rect x="6" y="14" width="12" height="8" />
+            </svg><span>PDF file<small>Via the print dialog</small></span></button>
+        </div>
+      </div>
+      <input type="file" id="fileInput" accept=".md,.markdown,.txt" hidden>
+    </div>
+    <div class="inkbar">
+      <button class="tbtn" id="undoBtn" title="Undo (Ctrl+Z)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 14 4 9 9 4" />
+          <path d="M20 20v-7a4 4 0 0 0-4-4H4" />
+        </svg><span class="bdg" id="undoBadgeEl">0</span></button>
+      <button class="tbtn" id="redoBtn" title="Redo (Ctrl+Y)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 14 20 9 15 4" />
+          <path d="M4 20v-7a4 4 0 0 1 4-4h12" />
+        </svg><span class="bdg" id="redoBadgeEl">0</span></button>
+      <span class="tsep"></span>
+      <button class="tbtn fmt" id="boldBtn" title="Bold"><b>B</b></button>
+      <button class="tbtn fmt" id="italicBtn" title="Italic"><i>I</i></button>
+      <button class="tbtn fmt" id="strikeBtn" title="Strikethrough"><s>S</s></button>
+      <button class="tbtn fmt" id="linkBtn" title="Link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" />
+          <path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" />
+        </svg></button>
+      <button class="tbtn fmt" id="listBtn" title="Bullet list"><svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="8" y1="6" x2="21" y2="6" />
+          <line x1="8" y1="12" x2="21" y2="12" />
+          <line x1="8" y1="18" x2="21" y2="18" />
+          <line x1="3" y1="6" x2="3.01" y2="6" />
+          <line x1="3" y1="12" x2="3.01" y2="12" />
+          <line x1="3" y1="18" x2="3.01" y2="18" />
+        </svg></button>
+      <button class="tbtn fmt" id="quoteBtn" title="Quote">Quote</button>
+      <button class="tbtn fmt" id="headBtn" title="Heading 1">H1</button>
+      <button class="tbtn fmt" id="head2Btn" title="Heading 2">H2</button>
+      <button class="tbtn fmt" id="codeBtn" title="Code"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
+        </svg></button>
+      <span class="tsep"></span>
+      <button class="tbtn" id="themeBtn" title="Toggle light / dark mode"><svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.2" y1="4.2" x2="5.6" y2="5.6" />
+          <line x1="18.4" y1="18.4" x2="19.8" y2="19.8" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.2" y1="19.8" x2="5.6" y2="18.4" />
+          <line x1="18.4" y1="5.6" x2="19.8" y2="4.2" />
+        </svg></button>
+      <button class="tbtn" id="pdfBtn" title="Open explanation PDF"><svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>Guide</button>
+      <button class="tbtn" id="cppBtn" title="Download stackeditor.cpp"><svg viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>C++</button>
+    </div>
+    <div class="loadbar"><i id="loadFillEl"></i></div>
+    <div class="board" id="boardCtn">
+      <div class="page active" id="pageEditCtn">
+        <div class="glass">
+          <div class="paneHead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9" />
+              <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" />
+            </svg><span id="countEl">Markdown Editor · two stacks</span></div>
+          <div class="editorWrap">
+            <div class="gutter" id="gutterEl">1</div>
+            <div class="codeArea">
+              <pre class="backdrop" id="backdropEl" aria-hidden="true"></pre>
+              <textarea class="typeArea" id="editorEl" spellcheck="false" wrap="soft"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page" id="pagePrevCtn">
+        <div class="glass">
+          <div class="paneHead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>Live Preview</div>
+          <div class="previewScroll" id="previewEl"></div>
+        </div>
+      </div>
+      <div class="page" id="pageStackCtn">
+        <div class="glass">
+          <div class="paneHead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="8" y1="6" x2="21" y2="6" />
+              <line x1="8" y1="12" x2="21" y2="12" />
+              <line x1="8" y1="18" x2="21" y2="18" />
+              <line x1="3" y1="6" x2="3.01" y2="6" />
+              <line x1="3" y1="12" x2="3.01" y2="12" />
+              <line x1="3" y1="18" x2="3.01" y2="18" />
+            </svg>Inside the stacks <span class="cnt" id="stackCntEl">0 + 0</span></div>
+          <div class="stacksScroll">
+            <div class="stkGrid">
+              <div class="stk">
+                <h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="9 14 4 9 9 4" />
+                    <path d="M20 20v-7a4 4 0 0 0-4-4H4" />
+                  </svg>Undo stack</h5>
+                <div id="undoStackCtn"></div>
+              </div>
+              <div class="stk">
+                <h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="15 14 20 9 15 4" />
+                    <path d="M4 20v-7a4 4 0 0 1 4-4h12" />
+                  </svg>Redo stack</h5>
+                <div id="redoStackCtn"></div>
+              </div>
+            </div>
+            <div class="howNote"><b>How it works.</b> Every keystroke pushes a snapshot onto the undo stack, so Undo
+              steps back character by character. Undo pops the top snapshot back and pushes the current text onto redo.
+              Typing anything new clears the redo stack — exactly like real editors.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar"><span>Words <b id="wordsEl">0</b></span><span>Chars <b id="charsEl">0</b></span><span
+        style="margin-left:auto">undo <b id="undoDepthEl">0</b> · redo <b id="redoDepthEl">0</b></span></div>
+    <div class="toast" id="toastEl"></div>
+    <div class="tabbar">
+      <button id="tabEditBtn" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9" />
+          <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" />
+        </svg>Edit</button>
+      <button id="tabPrevBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>Preview</button>
+      <button id="tabStackBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="8" y1="6" x2="21" y2="6" />
+          <line x1="8" y1="12" x2="21" y2="12" />
+          <line x1="8" y1="18" x2="21" y2="18" />
+          <line x1="3" y1="6" x2="3.01" y2="6" />
+          <line x1="3" y1="12" x2="3.01" y2="12" />
+          <line x1="3" y1="18" x2="3.01" y2="18" />
+        </svg>Stacks</button>
+    </div>
+  </div>
+
+  <script type="module" src="src/action.js"></script>
+
+</body>
+
+</html>

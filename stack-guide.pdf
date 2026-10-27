@@ -1,0 +1,315 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 2303 >>
+stream
+BT
+0.35 0.30 0.75 rg
+/F2 10 Tf
+13 TL
+56 800 Td
+(DATA STRUCTURES  "  STACKS  "  C++) Tj
+ET
+BT
+0 0 0 rg
+/F2 24 Tf
+30 TL
+56 772 Td
+(Stacks in the Real World) Tj
+ET
+BT
+0.3 0.3 0.35 rg
+/F1 11 Tf
+14 TL
+56 752 Td
+(The data structure behind Undo and Redo  and inside this app.) Tj
+ET
+BT
+0.35 0.30 0.75 rg
+/F2 14 Tf
+18 TL
+56 722 Td
+(1. Why stacks are necessary) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 702 Td
+(A stack is Last-In, First-Out: push adds to the top, pop removes from the) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 688 Td
+(top, peek reads the top. That is the whole API  and it is exactly what) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 674 Td
+(reversing time needs. Undo means: take the most recent change first.) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 660 Td
+(No searching, no indexes  the top of the stack IS the last thing you did.) Tj
+ET
+BT
+0.35 0.30 0.75 rg
+/F2 14 Tf
+18 TL
+56 632 Td
+(2. The two-stack undo/redo design) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 612 Td
+(Keep an UNDO stack and a REDO stack of text snapshots:) Tj
+ET
+BT
+0 0 0 rg
+/F2 11 Tf
+14 TL
+70 594 Td
+(Edit:   push old text on UNDO, clear REDO.) Tj
+ET
+BT
+0 0 0 rg
+/F2 11 Tf
+14 TL
+70 580 Td
+(Undo:   push current text on REDO, pop UNDO back into editor.) Tj
+ET
+BT
+0 0 0 rg
+/F2 11 Tf
+14 TL
+70 566 Td
+(Redo:   push current text on UNDO, pop REDO back into editor.) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 548 Td
+(New typing after an undo wipes REDO  the standard behavior of every) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 534 Td
+(real editor, and exactly what this app does.) Tj
+ET
+BT
+0.35 0.30 0.75 rg
+/F2 14 Tf
+18 TL
+56 506 Td
+(3. How this app uses it) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 486 Td
+(The editor commits a snapshot on every keystroke, so each undo step) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 472 Td
+(moves back exactly one character. Toolbar buttons commit instantly. The) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 458 Td
+(Stacks tab shows both stacks live with the TOP cell highlighted, plus) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 444 Td
+(depth badges on the Undo/Redo buttons. History is capped at 100 snapshots.) Tj
+ET
+BT
+0 0 0 rg
+/F2 11 Tf
+14 TL
+56 430 Td
+(Keyboard: Ctrl+Z undo, Ctrl+Y or Ctrl+Shift+Z redo.) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 408 Td
+(All operations are O\(1\): push, pop and peek never scan the history.) Tj
+ET
+BT
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 1792 >>
+stream
+BT
+0.35 0.30 0.75 rg
+/F2 10 Tf
+13 TL
+56 800 Td
+(DATA STRUCTURES  "  STACKS  "  C++) Tj
+ET
+BT
+0 0 0 rg
+/F2 18 Tf
+23 TL
+56 772 Td
+(Six places C++ programs use stacks) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 744 Td
+(1. Function calls  the call stack stores return addresses and locals.) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 730 Td
+(   Deep recursion overflows it: stack overflow.) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 712 Td
+(2. Undo/redo  two std::stack<std::string> snapshots, as in stackeditor.cpp.) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 694 Td
+(3. Expression evaluation  infix to postfix, bracket matching, calculators.) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 676 Td
+(4. Backtracking  maze solving, DFS, and parsers push choices, pop to retry.) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 658 Td
+(5. Browser / editor history  back and forward are two stacks.) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 640 Td
+(6. Syntax checking  compilers match every opening brace with a stack.) Tj
+ET
+BT
+0.35 0.30 0.75 rg
+/F2 14 Tf
+18 TL
+56 610 Td
+(Try it in C++ \(stackeditor.cpp ships with this project\)) Tj
+ET
+BT
+0 0 0 rg
+/F2 11 Tf
+14 TL
+56 590 Td
+(g++ -std=c++17 -O2 -o stackeditor stackeditor.cpp && ./stackeditor) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 572 Td
+(The demo types three phrases, undoes twice, redoes once, then types) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 558 Td
+(again to show redo being cleared  the same rule the web app enforces.) Tj
+ET
+BT
+0 0 0 rg
+/F2 11 Tf
+14 TL
+56 534 Td
+(Cost of every stack operation: O\(1\) time, O\(n\) memory for n snapshots.) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 506 Td
+(Takeaway: when the last thing in must be the first thing out ) Tj
+ET
+BT
+0 0 0 rg
+/F1 11 Tf
+14 TL
+56 492 Td
+(function returns, undos, backtracking, bracket matching  reach for a stack.) Tj
+ET
+BT
+ET
+endstream
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000191 00000 n 
+0000000266 00000 n 
+0000000402 00000 n 
+0000002756 00000 n 
+0000002892 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R >>
+startxref
+4735
+%%EOF
