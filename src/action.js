@@ -1,7 +1,6 @@
 
     (function () {
       const MAXH = 100;
-      const STARTER = "# Welcome to Ink\n\n* Clean interface\n* Live preview\n* Undo that never lies\n\n**Bold** text, *italic* text and `code` too.\n\n> Every keystroke is a snapshot on the undo stack.\n\n[W3Schools](https://www.w3schools.com)\n\n```\nundo.push(snapshot);\ntext = undo.top(); undo.pop();\n```\n";
       const $ = id => document.getElementById(id);
       const appCtn = $('appCtn'), editorEl = $('editorEl'), previewEl = $('previewEl'), backdropEl = $('backdropEl'), gutterEl = $('gutterEl');
       const undoStackCtn = $('undoStackCtn'), redoStackCtn = $('redoStackCtn'), toastEl = $('toastEl');
