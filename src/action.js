@@ -1,6 +1,7 @@
 
     (function () {
       const MAXH = 100;
+      const STARTER = "## WELCOME";
       const $ = id => document.getElementById(id);
       const appCtn = $('appCtn'), editorEl = $('editorEl'), previewEl = $('previewEl'), backdropEl = $('backdropEl'), gutterEl = $('gutterEl');
       const undoStackCtn = $('undoStackCtn'), redoStackCtn = $('redoStackCtn'), toastEl = $('toastEl');
